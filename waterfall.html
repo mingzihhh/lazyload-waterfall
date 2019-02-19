@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+    <title>Document</title>
+    <style>
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .container img {
+            position: absolute;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="img/1.jpg" alt="">
+        <img src="img/2.jpg" alt="">
+        <img src="img/3.jpg" alt="">
+        <img src="img/4.jpg" alt="">
+        <img src="img/5.jpg" alt="">
+        <img src="img/6.jpg" alt="">
+        <img src="img/7.jpg" alt="">
+        <img src="img/8.jpg" alt="">
+        <img src="img/9.jpg" alt="">
+        <img src="img/10.jpg" alt="">
+        <img src="img/11.jpg" alt="">
+        <img src="img/12.jpg" alt="">       
+    </div>
+    <script>
+        var colCount
+        var colHeightArray = []
+        var imgWidth = $('.container img').outerWidth(true)
+
+        colCount = Math.floor($('.container').width()/imgWidth)
+        console.log(colCount)
+        for(var i=0 ; i<colCount ; i++){
+            colHeightArray[i] = 0
+        }
+
+        $('.container img').on('load',function(){
+            console.log(colHeightArray)
+            var minHeight = colHeightArray[0]
+            var minIndex = 0
+            for(var i=0 ; i<colCount ; i++){
+                if(colHeightArray[i] < minHeight){
+                    minHeight = colHeightArray[i]
+                    minIndex = i
+                }
+            }
+
+            console.log(minHeight,minIndex)
+            $(this).css({
+                'left':imgWidth*minIndex,
+                'top':minHeight
+            })
+            colHeightArray[minIndex] += $(this).outerHeight(true)
+        })
+
+        
+        
+    </script>
+</body>
+</html>

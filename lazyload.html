@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+    <title>Document</title>
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .container img {
+            float: left;
+            width: 50%;
+            height: 500px;
+        }
+        .container::after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="img/load.png" alt="" data-src="img/1.jpg">
+        <img src="img/load.png" alt="" data-src="img/2.jpg">
+        <img src="img/load.png" alt="" data-src="img/3.jpg">
+        <img src="img/load.png" alt="" data-src="img/4.jpg">
+        <img src="img/load.png" alt="" data-src="img/5.jpg">
+        <img src="img/load.png" alt="" data-src="img/6.jpg">
+        <img src="img/load.png" alt="" data-src="img/7.jpg">
+        <img src="img/load.png" alt="" data-src="img/8.jpg">
+        <img src="img/load.png" alt="" data-src="img/9.jpg">
+        <img src="img/load.png" alt="" data-src="img/10.jpg">
+        <img src="img/load.png" alt="" data-src="img/11.jpg">
+        <img src="img/load.png" alt="" data-src="img/12.jpg">     
+    </div>
+    <script>
+        var LazyLoad = {
+            init: function () {
+                this.imgs = $('.container img:not(data-isLoaded)')
+                this.bind()
+                this.start()
+            },
+            bind: function () {
+                var _this = this
+                var time = null
+                $(window).scroll(function () {
+                    if (time) {
+                        clearTimeout(time)
+                    }
+                    time = setTimeout(function () {
+                        _this.start()
+                    }, 100)
+                })
+            },
+            start: function () {
+                var _this = this
+                _this.imgs.each(function () {
+                    var $node = $(this)
+                    if (_this.isShow($node)) {
+                        // setTimeout(function(){
+                        _this.loadImg($node)
+                        //  },500)
+                    }
+                })
+
+            },
+            isShow: function ($img) {
+                return $(window).height() + $(window).scrollTop() >= $img.offset().top
+            },
+            loadImg: function ($img) {
+                $img.attr('src', $img.attr('data-src'))
+                $img.attr('data-isLoaded', '1')
+            }
+        }
+        LazyLoad.init()
+    </script>
+</body>
+</html>
